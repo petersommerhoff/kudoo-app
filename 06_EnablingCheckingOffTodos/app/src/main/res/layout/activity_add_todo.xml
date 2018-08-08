@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.add.AddTodoActivity">
+
+    <EditText
+        android:id="@+id/etNewTodo"
+        android:hint="@string/enter_new_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        tools:text="@string/enter_new_todo"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnAddTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_do"
+        android:textAppearance="@android:style/TextAppearance"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
