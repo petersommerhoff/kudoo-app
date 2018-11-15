@@ -38,6 +38,7 @@ class RecyclerListAdapter(
 
     fun bindItem(todoItem: TodoItem) {
       tvTodoTitle.text = todoItem.title
+      cbTodoDone.isChecked = false
     }
   }
 }

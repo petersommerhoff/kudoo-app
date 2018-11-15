@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     launch(UI) {
-      val todosLiveData = viewModel.getTodosAsync().await()
+      val todosLiveData = viewModel.getTodos()
       todosLiveData.observe(this@MainActivity, Observer { todos ->
         // Observes changes in the LiveData
         todos?.let {

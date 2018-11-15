@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun setUpRecyclerView() = with(recyclerViewTodos) {
-    launch(UI) { adapter = RecyclerListAdapter(viewModel.getTodosAsync().await()) }
+    launch(UI) { adapter = RecyclerListAdapter(viewModel.getTodos()) }
     layoutManager = LinearLayoutManager(this@MainActivity)
     itemAnimator = DefaultItemAnimator()
     addItemDecoration(

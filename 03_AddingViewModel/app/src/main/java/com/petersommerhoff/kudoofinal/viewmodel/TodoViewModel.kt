@@ -12,9 +12,11 @@ import kotlinx.coroutines.experimental.*
 class TodoViewModel(app: Application) : AndroidViewModel(app) {
   private val dao by lazy { AppDatabase.getDatabase(getApplication()).todoItemDao() }
 
-  fun getTodosAsync(): Deferred<MutableList<TodoItem>> = async(DB) {
+  suspend fun getTodos(): MutableList<TodoItem> = withContext(DB) {
     dao.loadAllTodos().toMutableList()
   }
+
   fun add(todo: TodoItem) = launch(DB) { dao.insertTodo(todo) }
+
   fun delete(todo: TodoItem) = launch(DB) { dao.deleteTodo(todo) }
 }
