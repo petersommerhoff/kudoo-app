@@ -13,12 +13,20 @@ import com.petersommerhoff.kudoofinal.view.main.RecyclerListAdapter
 import com.petersommerhoff.kudoofinal.viewmodel.TodoViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
 
   private lateinit var viewModel: TodoViewModel  // Now references view model, not DB
+
+  val uiScope = CoroutineScope(coroutineContext + SupervisorJob())
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.Main
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -45,7 +53,7 @@ class MainActivity : AppCompatActivity() {
           DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
     }
 
-    launch(UI) {
+    uiScope.launch {
       val todosLiveData = viewModel.getTodos()
       todosLiveData.observe(this@MainActivity, Observer { todos ->
         // Observes changes in the LiveData
