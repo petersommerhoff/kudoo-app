@@ -9,7 +9,6 @@ import com.petersommerhoff.kudoofinal.model.TodoItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import java.util.concurrent.Executors
 
 /**
