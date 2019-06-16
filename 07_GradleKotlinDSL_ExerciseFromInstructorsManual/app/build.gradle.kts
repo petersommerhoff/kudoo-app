@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -8,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(27)
+    compileSdkVersion(28)
     defaultConfig {
         applicationId = "com.petersommerhoff.kudoofinal"
         minSdkVersion(19)
-        targetSdkVersion(27)
+        targetSdkVersion(28)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
@@ -27,17 +25,17 @@ android {
 
 dependencies {
     val kotlin_version: String by rootProject.extra
-//    implementation(fileTree(dir: 'libs', include: ['*.jar']))
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
-    implementation("com.android.support:appcompat-v7:27.1.1")
-    implementation("com.android.support.constraint:constraint-layout:1.1.2")
-    implementation("com.android.support:design:27.1.1")
+    implementation("com.android.support:appcompat-v7:28.0.0")
+    implementation("com.android.support.constraint:constraint-layout:1.1.3")
+    implementation("com.android.support:design:28.0.0")
 
     val room_version = "1.1.1"  // Adjust to newest version if you want to
     implementation("android.arch.persistence.room:runtime:$room_version")
     kapt("android.arch.persistence.room:compiler:$room_version")
 
-    val coroutines_version = "0.24.0"
+    val coroutines_version = "1.2.1"
     // Use newest version if you want (might differ)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
@@ -52,7 +50,5 @@ dependencies {
 }
 
 androidExtensions {
-  configure(delegateClosureOf<AndroidExtensionsExtension> {  // Injects Groovy code
     isExperimental = true
-  })
 }

@@ -6,13 +6,18 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.petersommerhoff.kudoofinal.model.TodoItem
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.newSingleThreadContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
+import java.util.concurrent.Executors
 
 /**
  * @author Peter Sommerhoff
  */
-val DB = newSingleThreadContext("DB")  // CoroutineContext for DB operations
+val DB = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+
+val dbScope = CoroutineScope(DB)
 
 @Database(entities = [TodoItem::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
@@ -40,7 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     private fun populateWithSampleData(ctx: Context) {
-      launch(DB) {  // DB operations must be done on a background thread
+      dbScope.launch {  // DB operations must be done on a background thread
         with(getDatabase(ctx).todoItemDao()) {
           insertTodo(TodoItem("Create entity"))
           insertTodo(TodoItem("Add a DAO for data access"))
