@@ -8,15 +8,22 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.petersommerhoff.kudoofinal.db.AppDatabase
 import com.petersommerhoff.kudoofinal.db.DB
+import com.petersommerhoff.kudoofinal.db.dbScope
 import com.petersommerhoff.kudoofinal.view.main.RecyclerListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
 
   private lateinit var db: AppDatabase  // Stores an AppDatabase object
+
+  val uiScope = CoroutineScope(coroutineContext + SupervisorJob())
+
+  override val coroutineContext: CoroutineContext
+    get() = Dispatchers.Main
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,9 +39,9 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun setUpRecyclerView() = with(recyclerViewTodos) {
-    launch {
+    uiScope.launch {
       val todos = sampleData().toMutableList()
-      withContext(UI) { adapter = RecyclerListAdapter(todos) }
+      adapter = RecyclerListAdapter(todos)
     }
     layoutManager = LinearLayoutManager(this@MainActivity)
     itemAnimator = DefaultItemAnimator()
